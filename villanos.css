@@ -1,0 +1,126 @@
+:root{
+    --card-heigth:300px;
+    --card-width: calc(var(--card-heigth) / 1.5);
+}
+
+* {
+    box-sizing: border-box; /*esto sirve para medir lo elementos y no se me hagan mas grandes*
+    ancho y alto de un elemento incluyan su relleno y borde, en lugar de soslo su are de contenido*/
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    display: flex; /*flex para poner en modo filas, en vez de uno bajo el otro */
+    justify-content: center; /*alinear los objetos de forma en la que valla el flex, ESTA PROPIEDAD ES UTIL PARA ALINEAR LOS OBJETOS, hay muchas mas caracterisiticas  */
+    align-items: center;
+    background-color:#03000a;
+}
+
+.card {
+    width: var(--card-width);
+    height: var(--card-heigth);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0 36px;
+    perspective: 2500px; /*Dar perspectiva a elemetnos 3d posicionados*/
+    margin: 0 50px;
+}
+
+.cover-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*muy util, esto sirve si le quiero dar a unas imagenes el 100px de heig y width, habran unas
+    que quedaran como borrosas, utilizo esto y se arregla , conserva su calidad */
+}
+
+.wrapper{
+    transition: all 0.5s; /* transition: <property> <duration> <timing-function> */
+    position: absolute;
+    width: 100%; /*Si presiono ctl + / se realizar un comentario mucho mas rapido, selecionando todo */
+    z-index: -1;
+}
+
+.card:hover .wrapper{
+    transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0) ;
+    /*-perspective : establece una perspectiva 3D con una distancia de 900 píxeles
+    -translateY(-5%) : mueve el elemento hacia arriba un 5% de su propio tamaño 
+    -rotate(25deg): Rota el elemento 25 grados en el eje Z(2D)
+    -translateZ(0): Asegura que el elemento permaneza en el mismo plano Z.
+    */
+    box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+    /*Aplica una sombra de caja con un desplazamiento de 2px en el eje X,
+     35px en el eje Y, un desenfoque de 32px y una expansión de -8px,
+      con un color negro semitransparente.*/
+    -webkit-box-shadow: 2px 35px 32px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+    /*Prefijos para asegurar la compatibilidad con navegadores antiguos,
+     aunque en la mayoría de los navegadores modernos ya no son necesarios.*/
+}
+
+.wrapper::before,
+.wrapper::after{
+content: "";
+opacity: 0;
+width: 100%;
+height: 80%;
+transition: all 0.5s;
+position: absolute;
+left: 0;
+}
+
+.wrapper::before{
+    top: 0;
+    height: 100%;
+    background-image: linear-gradient( /*Esto es para crear degradados con colores, esta muy muy guapo*/
+         to top,
+        transparent 46%,
+        rgba(12, 13, 19, 0.5) 68%,
+        rgba(12, 13, 19, 0.5) 97%
+    );   
+}
+
+.wrapper::after{
+    bottom: 0;
+    opacity: 1;
+    background-image: linear-gradient(
+        to bottom,
+        transparent 46%,
+        rgba(12, 13, 19, 0.5) 68%,
+        rgba(12, 13, 19, 0.5) 97%
+    )
+}
+
+.card:hover .wrapper::before,
+.wrapper::after{
+    opacity: 1;
+}
+
+.card:hover .wrapper::after{
+    height: 120px;
+}
+
+.title {
+    width: 100%;
+    transition: transform 0.5s;
+  }
+
+.card:hover .title{
+transform: translate3d(0%, -50px, 100px);
+}
+
+.character{
+    width: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+    position: absolute;
+    z-index: -1;
+}
+
+.card:hover .character{
+    opacity: 1;
+    transform: translate3d(0%, -30% ,100px);
+}
